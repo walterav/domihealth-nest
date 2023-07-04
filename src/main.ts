@@ -27,6 +27,6 @@ async function bootstrap() {
 
 
   await app.listen(process.env.PORT);
-  logger.log(`Aplicación corriendo en ek puerto ${ process.env.PORT }`);
+  logger.log(`Aplicación corriendo en el puerto ${ process.env.PORT }`);
 }
 bootstrap();
