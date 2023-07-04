@@ -1,7 +1,7 @@
 import { User } from "src/auth/entities/user.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity({name: 'medical_records'})
 export class ClinicHistory {
 
     @PrimaryGeneratedColumn('uuid')
