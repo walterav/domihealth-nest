@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/auth/entities/user.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class ClinicHistory {
@@ -50,4 +51,13 @@ export class ClinicHistory {
     @Column('text',{
     })
     religion:string;
+
+    @ManyToOne(
+        () => User, 
+        user => user.clinicHistory, 
+        { eager: true }
+    )
+    user: User;
+
+
 }

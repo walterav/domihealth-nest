@@ -6,6 +6,7 @@ import { ClinicHistory } from './entities/clinic-history.entity';
 import { Repository } from 'typeorm';
 import { isUUID } from 'class-validator';
 import { PaginationDto } from 'src/common/pagination.dto';
+import { User } from 'src/auth/entities/user.entity';
 
 @Injectable()
 export class ClinicHistoryService {
@@ -17,10 +18,11 @@ export class ClinicHistoryService {
     private readonly clinicHistoryRepository:Repository<ClinicHistory>
   ){}
 
-  async create(createClinicHistoryDto: CreateClinicHistoryDto) {
+  async create(createClinicHistoryDto: CreateClinicHistoryDto, user: User) {
     try {
       
       const clinicHistory = this.clinicHistoryRepository.create(createClinicHistoryDto);
+      clinicHistory.user = user;
       await this.clinicHistoryRepository.save(clinicHistory);
       return clinicHistory;
 
@@ -43,6 +45,7 @@ export class ClinicHistoryService {
   }
 
   async findOne( term: string) {
+    
     let clinicHistory: ClinicHistory
 
     if(isUUID(term)){
@@ -64,7 +67,7 @@ export class ClinicHistoryService {
     return clinicHistory;
     }
 
-  async update(id: string, updateClinicHistoryDto: UpdateClinicHistoryDto) {
+  async update(id: string, updateClinicHistoryDto: UpdateClinicHistoryDto, user: User) {
     
     const clinicHistory = await this.clinicHistoryRepository.preload({
       id: id,
@@ -74,7 +77,7 @@ export class ClinicHistoryService {
     if( !clinicHistory ) throw new NotFoundException(`Historia clínica con id: ${ id } no encontrada`);
     
     try {
-      
+      clinicHistory.user = user;
       await this.clinicHistoryRepository.save(clinicHistory);
       return clinicHistory;
 
