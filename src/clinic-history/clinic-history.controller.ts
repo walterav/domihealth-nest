@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseUUIDPipe, Query } from '@nestjs/common';
 import { ClinicHistoryService } from './clinic-history.service';
 import { CreateClinicHistoryDto } from './dto/create-clinic-history.dto';
 import { UpdateClinicHistoryDto } from './dto/update-clinic-history.dto';
+import { PaginationDto } from 'src/common/pagination.dto';
 
 @Controller('clinic-history')
 export class ClinicHistoryController {
@@ -13,22 +14,25 @@ export class ClinicHistoryController {
   }
 
   @Get()
-  findAll() {
-    return this.clinicHistoryService.findAll();
+  findAll( @Query() paginationDto:PaginationDto) {
+    return this.clinicHistoryService.findAll(paginationDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.clinicHistoryService.findOne(+id);
+  @Get(':term')
+  findOne(@Param('term', ParseUUIDPipe) term: string) {
+    return this.clinicHistoryService.findOne( term );
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClinicHistoryDto: UpdateClinicHistoryDto) {
-    return this.clinicHistoryService.update(+id, updateClinicHistoryDto);
+  update(
+    @Param('id', ParseUUIDPipe) id: string, 
+    @Body() updateClinicHistoryDto: UpdateClinicHistoryDto
+    ) {
+    return this.clinicHistoryService.update( id , updateClinicHistoryDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.clinicHistoryService.remove(+id);
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.clinicHistoryService.remove( id );
   }
 }
