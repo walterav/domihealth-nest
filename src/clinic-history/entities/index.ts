@@ -1,0 +1,1 @@
+export { ClinicHistory } from './clinic-history.entity';

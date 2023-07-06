@@ -1,9 +1,10 @@
-import { ClinicHistory } from "src/clinic-history/entities/clinic-history.entity";
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ClinicHistory } from 'src/clinic-history/entities';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
 
 @Entity('users')
 export class User {
-
+    
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
@@ -30,7 +31,6 @@ export class User {
         default: ['user']
     })
     roles: string[];
-
 
     @OneToMany(
         () => ClinicHistory,

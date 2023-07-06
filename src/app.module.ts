@@ -4,12 +4,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClinicHistoryModule } from './clinic-history/clinic-history.module';
 import { CommonModule } from './common/common.module';
 import { AuthModule } from './auth/auth.module';
+import { join } from 'path';
 
 @Module({
   imports:  [
     ConfigModule.forRoot(),
 
     TypeOrmModule.forRoot({
+      /*ssl: process.env.STAGE ==='prod',
+      extra: {
+        ssl: process.env.STAGE ==='prod'
+        ? { rejectUnauthorized: false }
+        : null,
+      },*/
       type: 'postgres',
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
@@ -20,6 +27,7 @@ import { AuthModule } from './auth/auth.module';
       synchronize: true,
     }),
 
+    
     ClinicHistoryModule,
 
     CommonModule,

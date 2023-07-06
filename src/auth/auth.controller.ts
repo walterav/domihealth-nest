@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, UseGuards, Req, Headers, SetMetadata } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
+
 import { IncomingHttpHeaders } from 'http';
 
 import { AuthService } from './auth.service';
@@ -78,7 +79,7 @@ export class AuthController {
 
 
   @Get('private3')
-  @Auth()
+  @Auth( ValidRoles.admin )
   privateRoute3(
     @GetUser() user: User
   ) {
@@ -90,32 +91,5 @@ export class AuthController {
   }
 
 
+
 }
-
-
-
-
-
-
-
-
-  /*@Get()
-  findAll() {
-    return this.authService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
-  }
-}*/
